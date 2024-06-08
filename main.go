@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+	fmt.Println("yo")
 	//check arguments
 	wrong_input, opt_template, opt_justify, opt_output, opt_color, sentence, asset_file_name := lib.CheckOptions()
 	if wrong_input {
