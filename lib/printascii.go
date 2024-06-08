@@ -1,8 +1,11 @@
 package lib
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
-func PrintAscii(table_asset [][]string, sentence string) {
+func PrintAscii(opt_justify, opt_output, opt_color bool, table_asset [][]string, sentence string) {
 	var l1, l2, l3, l4, l5, l6, l7, l8 string
 
 	//iteration above the user string
@@ -10,9 +13,13 @@ func PrintAscii(table_asset [][]string, sentence string) {
 		//add on variables each line of characters
 		if sentence[i] == '\\' && i < len(sentence) && len(sentence) > 1 {
 			if i < len(sentence)-1 && sentence[i+1] == 'n' {
-				Print(l1, l2, l3, l4, l5, l6, l7, l8)
-				l1, l2, l3, l4, l5, l6, l7, l8 = "", "", "", "", "", "", "", ""
-				i++
+				if opt_justify {
+					PrintJustify(l1, l2, l3, l4, l5, l6, l7, l8, os.Args[1])
+				} else {
+					Print(l1, l2, l3, l4, l5, l6, l7, l8)
+					l1, l2, l3, l4, l5, l6, l7, l8 = "", "", "", "", "", "", "", ""
+					i++
+				}
 			} else {
 				l1 += table_asset[sentence[i]-32][0]
 				l2 += table_asset[sentence[i]-32][1]

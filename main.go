@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println("yo")
 	//check arguments
 	wrong_input, opt_template, opt_justify, opt_output, opt_color, sentence, asset_file_name := lib.CheckOptions()
 	if wrong_input {
@@ -21,5 +20,5 @@ func main() {
 
 	asset, thinkertoy := lib.GetFileContent("assets/" + asset_file_name)
 	table_asset := lib.CreateTable(asset, thinkertoy)
-	lib.PrintAscii(table_asset, sentence)
+	lib.PrintAscii(opt_justify, opt_output, opt_color, table_asset, sentence)
 }
