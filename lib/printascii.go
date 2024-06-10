@@ -7,19 +7,22 @@ import (
 
 func PrintAscii(opt_justify, opt_output, opt_color bool, table_asset [][]string, sentence string) {
 	var l1, l2, l3, l4, l5, l6, l7, l8 string
-
+	if opt_justify && os.Args[1] == "--align=justify" {
+		PrintJustify(l1, l2, l3, l4, l5, l6, l7, l8, os.Args[1], table_asset)
+		return
+	}
 	//iteration above the user string
 	for i := 0; i < len(sentence); i++ {
 		//add on variables each line of characters
 		if sentence[i] == '\\' && i < len(sentence) && len(sentence) > 1 {
-			if i < len(sentence)-1 && sentence[i+1] == 'n' {
-				if opt_justify {
-					PrintJustify(l1, l2, l3, l4, l5, l6, l7, l8, os.Args[1])
-				} else {
-					Print(l1, l2, l3, l4, l5, l6, l7, l8)
-					l1, l2, l3, l4, l5, l6, l7, l8 = "", "", "", "", "", "", "", ""
-					i++
-				}
+			if opt_justify && (i < len(sentence)-1 && sentence[i+1] == 'n') {
+				PrintJustify(l1, l2, l3, l4, l5, l6, l7, l8, os.Args[1], table_asset)
+				l1, l2, l3, l4, l5, l6, l7, l8 = "", "", "", "", "", "", "", ""
+				i++
+			} else if i < len(sentence)-1 && sentence[i+1] == 'n' {
+				Print(l1, l2, l3, l4, l5, l6, l7, l8)
+				l1, l2, l3, l4, l5, l6, l7, l8 = "", "", "", "", "", "", "", ""
+				i++
 			} else {
 				l1 += table_asset[sentence[i]-32][0]
 				l2 += table_asset[sentence[i]-32][1]
@@ -48,6 +51,10 @@ func PrintAscii(opt_justify, opt_output, opt_color bool, table_asset [][]string,
 			fmt.Println("Error : invalid input")
 			return
 		}
+	}
+	if opt_justify {
+		PrintJustify(l1, l2, l3, l4, l5, l6, l7, l8, os.Args[1], table_asset)
+		return
 	}
 	fmt.Println(l1)
 	fmt.Println(l2)
