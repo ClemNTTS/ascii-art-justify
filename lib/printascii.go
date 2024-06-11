@@ -7,6 +7,8 @@ import (
 
 func PrintAscii(opt_justify, opt_output, opt_color bool, table_asset [][]string, sentence string) {
 	var l1, l2, l3, l4, l5, l6, l7, l8 string
+
+	//check if --align=justify cause we need to run the same code but modified, we also save run time
 	if opt_justify && os.Args[1] == "--align=justify" {
 		PrintJustify(l1, l2, l3, l4, l5, l6, l7, l8, os.Args[1], table_asset)
 		return
@@ -15,6 +17,7 @@ func PrintAscii(opt_justify, opt_output, opt_color bool, table_asset [][]string,
 	for i := 0; i < len(sentence); i++ {
 		//add on variables each line of characters
 		if sentence[i] == '\\' && i < len(sentence) && len(sentence) > 1 {
+			//check if justify, print, and make all variables empty for new line
 			if opt_justify && (i < len(sentence)-1 && sentence[i+1] == 'n') {
 				PrintJustify(l1, l2, l3, l4, l5, l6, l7, l8, os.Args[1], table_asset)
 				l1, l2, l3, l4, l5, l6, l7, l8 = "", "", "", "", "", "", "", ""
@@ -24,6 +27,7 @@ func PrintAscii(opt_justify, opt_output, opt_color bool, table_asset [][]string,
 				l1, l2, l3, l4, l5, l6, l7, l8 = "", "", "", "", "", "", "", ""
 				i++
 			} else {
+				//add the following string of the template for each letter
 				l1 += table_asset[sentence[i]-32][0]
 				l2 += table_asset[sentence[i]-32][1]
 				l3 += table_asset[sentence[i]-32][2]

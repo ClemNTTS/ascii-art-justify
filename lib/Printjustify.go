@@ -9,13 +9,17 @@ import (
 )
 
 func PrintJustify(l1, l2, l3, l4, l5, l6, l7, l8, full_opt string, table_asset [][]string) {
+	//get the size of the window
 	option := full_opt[8:]
 	cmd := exec.Command("stty", "size")
 	cmd.Stdin = os.Stdout
 	out, _ := cmd.CombinedOutput()
 	out_splited := strings.Fields(string(out))
 	width, _ := strconv.Atoi(out_splited[1])
+
+	//get the empty space
 	space := width - (len(l1))
+	//add spaces
 	switch option {
 	case "right":
 		if len(l1) != 0 {
@@ -61,7 +65,7 @@ func PrintJustify(l1, l2, l3, l4, l5, l6, l7, l8, full_opt string, table_asset [
 		sentence := os.Args[2]
 		final_size := 0
 		var t_txt []int
-		//for var space
+		//to get a table of the final space of each line without adding spaces
 		for i := 0; i < len(sentence); i++ {
 			//add on variables each line of characters
 			if sentence[i] == '\\' && i < len(sentence) && len(sentence) > 1 {
